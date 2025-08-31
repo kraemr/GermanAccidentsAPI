@@ -1,0 +1,11 @@
+number;name
+1;Kollision mit einem anderen Fahrzeug, das startet, stoppt oder steht
+2;Kollision mit einem vorausfahrenden oder wartenden Fahrzeug
+3;Kollision mit einem seitlich in dieselbe Richtung fahrenden Fahrzeug
+4;Kollision mit einem entgegenkommenden Fahrzeug
+5;Kollision mit einem Fahrzeug, das in eine Straße einbiegt oder diese überquert
+6;Kollision zwischen Fahrzeug und Fußgänger
+7;Kollision mit einem Hindernis auf der Fahrbahn
+8;Verlassen der Fahrbahn nach rechts
+9;Verlassen der Fahrbahn nach links
+0;Unfall anderer Art
