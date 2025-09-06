@@ -28,8 +28,8 @@ def download_all():
 
 # table is the table name and colnames is an array with two values 0=>int(the id) and the other is 1=>definition string
 def insert_def(table,colnames,fstr):
-    db = MySQLdb.connect(host="172.17.0.2",    # your host, usually localhost
-    user="root",         # your username
+    db = MySQLdb.connect(host="127.0.0.1",    # your host, usually localhost
+    user="myuser",         # your username
     passwd="Test",  # your password
     db="AccidentDB")        # name of the data base
     cursor = db.cursor()
@@ -43,8 +43,8 @@ def insert_def(table,colnames,fstr):
         db.commit()
 
 def parse_csv():
-    db = MySQLdb.connect(host="172.17.0.2",    # your host, usually localhost
-                     user="root",         # your username
+    db = MySQLdb.connect(host="127.0.0.1",    # your host, usually localhost
+                     user="myuser",         # your username
                      passwd="Test",  # your password
                      db="AccidentDB")        # name of the data base
     cursor = db.cursor()
@@ -52,7 +52,7 @@ def parse_csv():
     current_year = int(datetime.date.today().year)
     year_i = start_year
     year_i = int(year_i)
-    cursor.execute("SET sql_log_bin = 0;") # avoid huge binary logs
+    #cursor.execute("SET sql_log_bin = 0;") # avoid huge binary logs
     db.commit()
     while(year_i < current_year):
         print(str(year_i) + ":")
