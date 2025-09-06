@@ -38,7 +38,7 @@ fi
 
 
 
-if [ ! -f /opt/.setup_done ]; then
+if [ ! -f /var/lib/mysql/.setup_done ]; then
     # Run the Python setup steps
     mkdir ./csvs
     python3 setup_db.py -i land_def land land_str setup_csvs/bundesländer.csv
@@ -59,7 +59,7 @@ if [ ! -f /opt/.setup_done ]; then
     python3 setup_db.py --fix
     python3 setup_db.py --parse
 fi
-touch /opt/.setup_done
+touch  /var/lib/mysql/.setup_done
 # Start the Spring Boot app
 echo "Starting Spring Boot application..."
 exec "$@"
