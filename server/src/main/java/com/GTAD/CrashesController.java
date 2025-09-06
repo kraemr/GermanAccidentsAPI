@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.GTAD.entities.AccidentData;
+import com.GTAD.entities.AccidentStats;
 import com.GTAD.entities.AllAccidentDefinitions;
 import com.GTAD.services.AccidentService;
 import com.GTAD.services.DefinitionsService;
@@ -56,6 +57,16 @@ public class CrashesController {
         return accidentService.findAccidents(col, cond, val, pageable).getContent();
     }
 
+    @GetMapping("/stats")
+    public List<AccidentStats> getAccidents(
+            @RequestParam String col,
+            @RequestParam String cond,
+            @RequestParam String val) {
+
+
+//        return accidentService.findAccidents(col, cond, val, pageable).getContent();
+                return null;
+}
      
 
 }

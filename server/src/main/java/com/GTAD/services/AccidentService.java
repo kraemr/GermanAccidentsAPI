@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.GTAD.entities.AccidentData;
+import com.GTAD.entities.AccidentStats;
 import com.GTAD.repositories.AccidentDataRepository;
 
 import java.util.List;
@@ -28,6 +29,13 @@ public class AccidentService {
 
     public Optional<AccidentData> getAccidentsById(Long id) {
         return accidentDataRepository.findById(id);
+    }
+
+    public List<AccidentStats> getAccidentStats(            
+            String col,
+            String cond,
+            String val){        
+        return null;            
     }
 
     @PersistenceContext
