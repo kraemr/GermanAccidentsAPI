@@ -12,33 +12,26 @@ public class AccidentData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long uident;
-
     private Short land;
     private Integer region;
     private Integer district;
     private Integer munincipality;
-
     private Short year;
     private Short day;
     private Short hour;
     private Short month;
-
     private Byte category;
     private Byte kind;
     private Byte type;
     private Byte lightCondition;
-
     private Boolean bycicleInvolved;
     private Boolean carInvolved;
     private Boolean passengerInvolved;
     private Boolean motorcycleInvolved;
     private Boolean deliveryVanInvolved;
     private Boolean truckBusOrTramInvolved;
-
     private Byte roadSurfaceCondition;
-
     private Float coordinateUtmX;
     private Float coordinateUtmY;
     private Float longitude;
