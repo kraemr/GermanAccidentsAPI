@@ -30,6 +30,7 @@ public class AccidentService {
     public Optional<AccidentData> getAccidentsById(Long id) {
         return accidentDataRepository.findById(id);
     }
+    
 
     public List<AccidentStats> getAccidentStats(            
             String col,

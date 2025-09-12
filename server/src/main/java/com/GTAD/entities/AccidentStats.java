@@ -1,7 +1,4 @@
 package com.GTAD.entities;
-
-import java.util.Map;
-
 public class AccidentStats {
     private int year;   
     private int count;

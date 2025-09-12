@@ -10,7 +10,7 @@ public class AllAccidentDefinitions {
         this.definitions = definitions;
     }
 
-    public Map<String, Map<Integer, String>> getDefinitions() {
+    public Map<String, Map<Integer, String>> getDefinitions() {        
         return definitions;
     }
 

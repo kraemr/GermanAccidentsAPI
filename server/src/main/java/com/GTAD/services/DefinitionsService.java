@@ -29,7 +29,7 @@ public class DefinitionsService {
             SELECT 'land' AS def_type, CAST(land AS CHAR) AS def_key, land_str AS def_value
             FROM land_def
             UNION ALL
-            SELECT 'municipality', CAST(munincipality AS CHAR), munincipality_str
+            SELECT 'munincipality', CAST(munincipality AS CHAR), munincipality_str
             FROM munincipality_def
             UNION ALL
             SELECT 'kind', CAST(kind AS CHAR), kind_str
