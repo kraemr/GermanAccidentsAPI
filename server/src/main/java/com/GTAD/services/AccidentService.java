@@ -10,6 +10,7 @@ import com.GTAD.repositories.AccidentDataRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -35,12 +36,75 @@ public class AccidentService {
     public List<AccidentStats> getAccidentStats(            
             String col,
             String cond,
-            String val){        
-        return null;            
+            String val){       
+        
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+        Root<AccidentData> root = cq.from(AccidentData.class);
+        Path<String> colPath = root.get(col);
+        Predicate condition;
+
+        switch (cond.toLowerCase()) {
+            case "=":
+            case "eq": condition = cb.equal(colPath, val);break;
+            case ">":
+            case "gt": condition = cb.greaterThan(colPath, val);break;
+            case "<":
+            case "lt": condition = cb.lessThan(colPath, val);break;
+            default: throw new IllegalArgumentException("Unsupported condition: " + cond);
+        }
+        // Group by year
+        Path<Integer> yearPath = root.get("year");
+        cq.multiselect(
+                yearPath,
+                cb.count(root)
+        );
+        cq.where(condition);
+        cq.groupBy(yearPath);
+
+        // Execute query
+        List<Object[]> results = entityManager.createQuery(cq).getResultList();
+
+        // Map results to DTO
+        long totalCount = results.stream()
+                             .mapToLong(r -> ((Long) r[1]))
+                             .sum();
+
+        return results.stream()
+                .map(r -> {
+                    int year = ((Number) r[0]).intValue();
+                    int count = ((Number) r[1]).intValue();
+                    float percentage = totalCount == 0 ? 0 : (count * 100f) / totalCount;
+                    return new AccidentStats(year, count, percentage);
+                })
+                .collect(Collectors.toList());        
     }
 
     @PersistenceContext
     private EntityManager entityManager;
+
+
+    public List<AccidentStats> getAccidentStats(          
+            String col,
+            String cond,
+            String val,
+            String groupBy                                    
+        ) {
+                
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<AccidentStats> cq = cb.createQuery(AccidentStats.class);
+        Root<AccidentStats> root = cq.from(AccidentStats.class);
+
+
+        Predicate condition = buildPredicate(cb, root, col, cond, val);
+        Path<Object> groupByPath = root.get(groupBy);
+
+        cq.multiselect(groupByPath, cb.count(root));
+        cq.where(condition);
+        cq.groupBy(groupByPath);
+        
+        return entityManager.createQuery(cq).getResultList();
+    }
 
     public Page<AccidentData> findAccidents(
             String col,
@@ -71,7 +135,7 @@ public class AccidentService {
         return new PageImpl<>(results, pageable, total);
     }
 
-    private Predicate buildPredicate(CriteriaBuilder cb, Root<AccidentData> root,
+    private Predicate buildPredicate(CriteriaBuilder cb, Root<?> root,
                                      String col, String cond, String val) {
         Path<?> path = root.get(col);
 
