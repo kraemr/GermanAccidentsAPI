@@ -1,4 +1,5 @@
 package com.GTAD.entities;
+
 public class AccidentStats {
     private int year;   
     private int count;
@@ -8,7 +9,7 @@ public class AccidentStats {
 
     }
 
-    AccidentStats( 
+    public AccidentStats( 
         int year,
         int count,
         float totalAccidentPercentage

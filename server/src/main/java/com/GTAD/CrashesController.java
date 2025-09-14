@@ -60,25 +60,25 @@ public class CrashesController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-@GetMapping("/year/{year}")
-public ResponseEntity<?> getAccidentsByYear(
-        @PathVariable Short year,
-        @RequestParam(name = "pretty", required = false, defaultValue = "false") boolean pretty
-) {
-    List<AccidentData> accidents = accidentService.getAccidentsByYear(year);
+    @GetMapping("/year/{year}")
+    public ResponseEntity<?> getAccidentsByYear(
+            @PathVariable Short year,
+            @RequestParam(name = "pretty", required = false, defaultValue = "false") boolean pretty
+    ) {
+        List<AccidentData> accidents = accidentService.getAccidentsByYear(year);
 
-    if (pretty) {
-        List<PrettyAccidentData> prettyList = accidents.stream()
-            .map(acc -> AccidentDataMapper.generatePrettyAccidentData(
-                acc,
-                definitionsService.getAccidentDefinitions().getDefinitions()
-            ))
-            .toList();
-        return ResponseEntity.ok(prettyList);
+        if (pretty) {
+            List<PrettyAccidentData> prettyList = accidents.stream()
+                .map(acc -> AccidentDataMapper.generatePrettyAccidentData(
+                    acc,
+                    definitionsService.getAccidentDefinitions().getDefinitions()
+                ))
+                .toList();
+            return ResponseEntity.ok(prettyList);
+        }
+
+        return ResponseEntity.ok(accidents);
     }
-
-    return ResponseEntity.ok(accidents);
-}
 
     @GetMapping("/page")
     public ResponseEntity<?> getAccidents(
@@ -109,12 +109,10 @@ public ResponseEntity<?> getAccidentsByYear(
     public List<AccidentStats> getAccidents(
             @RequestParam String col,
             @RequestParam String cond,
-            @RequestParam String val) {
-
-
-//        return accidentService.findAccidents(col, cond, val, pageable).getContent();
-                return null;
-}
+            @RequestParam String val
+            ) {
+            return accidentService.getAccidentStats(col, cond, val);                
+    }       
      
 
 }
